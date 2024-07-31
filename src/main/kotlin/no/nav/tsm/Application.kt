@@ -13,4 +13,5 @@ fun Application.module() {
     configureMonitoring()
     configureRouting()
     configureDatabase()
+    configureConsumers()
 }

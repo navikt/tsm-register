@@ -5,6 +5,8 @@ val postgresVersion: String by project
 val prometheusVersion: String by project
 val koinVersion: String by project
 val flywayVersion: String by project
+val kafkaVersion: String by project
+val jacksonVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.0.0"
@@ -31,10 +33,14 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-jackson-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
     implementation("io.insert-koin:koin-ktor:$koinVersion")
     implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-json:${exposedVersion}")
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposedVersion")
     implementation("org.flywaydb:flyway-database-postgresql:$flywayVersion")
     implementation("org.postgresql:postgresql:$postgresVersion")
     implementation("io.ktor:ktor-server-metrics-micrometer-jvm")
@@ -42,6 +48,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.ktor:ktor-server-config-yaml")
+    implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
     testImplementation("io.ktor:ktor-server-test-host-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
 }
