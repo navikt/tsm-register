@@ -1,5 +1,10 @@
 package no.nav.tsm.sykmelding.database
 
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import no.nav.tsm.smregister.models.ReceivedSykmelding
 import no.nav.tsm.sykmelding.database.tables.Sykmelding
 import org.jetbrains.exposed.sql.Database
@@ -12,6 +17,7 @@ class RegisterDB(private val database: Database) {
     companion object {
         private val logger = org.slf4j.LoggerFactory.getLogger(RegisterDB::class.java)
     }
+
     fun insertOrUpdateSykmelding(sykmeldingId: String, receivedSykmelding: ReceivedSykmelding?) {
         transaction(database) {
             if (receivedSykmelding != null) {

@@ -9,7 +9,6 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
     configureDependencyInjection()
-    configureSerialization()
     configureMonitoring()
     configureRouting()
     configureDatabase()
