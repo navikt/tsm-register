@@ -1,8 +1,7 @@
 name: Build and deploy
 on:
   push:
-    branches:
-      - main
+
 jobs:
   build:
     name: Build
@@ -50,6 +49,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
       - uses: nais/deploy/actions/deploy@v2
