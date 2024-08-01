@@ -46,9 +46,25 @@ class SykmeldingConsumer(private val kafkaConsumer: KafkaConsumer<String, Receiv
             val records = kafkaConsumer.poll(Duration.ofMillis(10_000))
 
             if (!records.isEmpty) {
-                records.forEach { record ->
-                    partitionOffsets[record.partition()] = record.offset()
-                    registerDB.insertOrUpdateSykmelding(record.key(), record.value())
+
+                var hasNullValue = false
+                records.forEach {
+                    if (it.value() == null) {
+                        hasNullValue = true
+                    }
+                    partitionOffsets[it.partition()] = it.offset()
+                }
+                if(hasNullValue) {
+                    logger.info("has null values in records, inserting/updating one by one")
+                    records.forEach { record ->
+                        registerDB.insertOrUpdateSykmelding(record.key(), record.value())
+                    }
+                } else {
+                    registerDB.bachUpsertSykmeldinger(records.map {
+                        val receivedSykmelding = it.value()
+                        requireNotNull(receivedSykmelding)
+                        receivedSykmelding
+                    })
                 }
             }
         }
