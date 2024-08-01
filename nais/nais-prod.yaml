@@ -9,7 +9,7 @@ spec:
   gcp:
     sqlInstances:
       - type: POSTGRES_14
-        tier: db-custom-2-5120
+        tier: db-custom-4-5120
         databases:
           - name: tsm-register
         diskAutoresize: true
