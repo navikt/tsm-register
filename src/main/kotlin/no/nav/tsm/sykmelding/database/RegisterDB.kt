@@ -69,31 +69,4 @@ class RegisterDB(private val database: Database) {
             }
         }
     }
-
-    fun bachUpsertSykmeldinger(sykmeldinger: List<ReceivedSykmelding>) {
-        transaction(database) {
-            Sykmelding.batchUpsert(sykmeldinger) { receivedSykmelding ->
-                this[Sykmelding.id] = receivedSykmelding.sykmelding.id
-                this[pasientFnr] = receivedSykmelding.personNrPasient
-                this[pasientAktoerId] = receivedSykmelding.sykmelding.pasientAktoerId
-                this[legeFnr] = receivedSykmelding.personNrLege
-                this[legeAktoerId] = receivedSykmelding.sykmelding.behandler.aktoerId
-                this[mottakId] = receivedSykmelding.navLogId
-                this[legekontorOrgNr] = receivedSykmelding.legekontorOrgNr
-                this[legekontorHerId] = receivedSykmelding.legekontorHerId
-                this[legekontorReshId] = receivedSykmelding.legekontorReshId
-                this[epjSystemNavn] = receivedSykmelding.sykmelding.avsenderSystem.navn
-                this[epjSystemVersjon] = receivedSykmelding.sykmelding.avsenderSystem.versjon
-                this[mottattTidspunkt] = receivedSykmelding.mottattDato
-                this[tssId] = receivedSykmelding.tssid
-                this[merknader] = receivedSykmelding.merknader
-                this[partnerreferansef] = receivedSykmelding.partnerreferanse
-                this[legeHpr] = receivedSykmelding.legeHprNr
-                this[legeHelsepersonellkategori] = receivedSykmelding.legeHelsepersonellkategori
-                this[utenlandskSykmelding] = receivedSykmelding.utenlandskSykmelding
-                this[sykmelding] = receivedSykmelding.sykmelding
-                this[validationResult] = receivedSykmelding.validationResult
-            }
-        }
-    }
 }
